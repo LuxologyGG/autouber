@@ -1,0 +1,25 @@
+{
+  "name": "autouber",
+  "version": "1.0.0",
+  "description": "A Discord bot to automate Uber Eats orders.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "node src/main.js",
+    "test-playwright": "node src/playwright-script.js"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "uber",
+    "eats",
+    "automation",
+    "playwright"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^17.3.1",
+    "playwright": "^1.44.1"
+  }
+}
