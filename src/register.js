@@ -8,10 +8,10 @@ require('dotenv').config({ path: '.dev.vars' });
 require('dotenv').config(); // fallback to .env
 
 const token = process.env.DISCORD_TOKEN;
-const applicationId = process.env.DISCORD_APPLICATION_ID;
+const applicationId = process.env.DISCORD_APPLICATION_ID || process.env.DISCORD_APP_ID || process.env.DISCORD_CLIENT_ID;
 
 if (!token || !applicationId) {
-  console.error('DISCORD_TOKEN and DISCORD_APPLICATION_ID must be set.');
+  console.error('DISCORD_TOKEN and DISCORD_APPLICATION_ID (or DISCORD_APP_ID) must be set.');
   process.exit(1);
 }
 

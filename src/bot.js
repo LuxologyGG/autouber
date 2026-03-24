@@ -35,7 +35,7 @@ const commands = [
 // Register slash commands with Discord
 async function registerCommands() {
   const token = process.env.DISCORD_TOKEN;
-  const clientId = process.env.DISCORD_CLIENT_ID;
+  const clientId = process.env.DISCORD_CLIENT_ID || process.env.DISCORD_APPLICATION_ID || process.env.DISCORD_APP_ID;
   if (!token || !clientId) {
     console.warn(
       'DISCORD_TOKEN or DISCORD_CLIENT_ID is not set – skipping slash command registration.'
@@ -62,7 +62,7 @@ async function registerCommands() {
   }
 }
 
-client.on('ready', async () => {
+client.on('clientReady', async () => {
   console.log(`Logged in as ${client.user.tag}!`);
   await registerCommands();
 });
