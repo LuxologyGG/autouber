@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
-    "test-playwright": "node src/playwright-script.js"
+    "test-camoufox": "node src/camoufox-script.js"
   },
   "keywords": [
     "discord",
@@ -13,13 +13,13 @@
     "uber",
     "eats",
     "automation",
-    "playwright"
+    "camoufox"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "camoufox": "^0.1.19",
     "discord.js": "^14.15.3",
-    "dotenv": "^17.3.1",
-    "playwright": "^1.44.1"
+    "dotenv": "^17.3.1"
   }
 }
