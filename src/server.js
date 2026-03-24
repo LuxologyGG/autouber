@@ -92,9 +92,18 @@ export default {
         const address = interaction.data.components[1].components[0].value;
         const items = interaction.data.components[2].components[0].value;
 
-        // The Camoufox automation runs on the Node.js bot process (bot.js/main.js).
-        // If you want the worker to trigger it, configure AUTOMATION_WEBHOOK_URL in .dev.vars
-        // and POST { restaurant, address, items } to that endpoint from here.
+        // Fire-and-forget: POST order to the local automation webhook (main.js HTTP server).
+        // Set AUTOMATION_WEBHOOK_URL (e.g. your ngrok/cloudflare tunnel URL) in .dev.vars / wrangler secrets.
+        if (env.AUTOMATION_WEBHOOK_URL) {
+          fetch(env.AUTOMATION_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-trigger-secret': env.TRIGGER_SECRET || '',
+            },
+            body: JSON.stringify({ restaurant, address, items }),
+          }).catch(err => console.error('[worker] webhook error:', err));
+        }
 
         return Response.json({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

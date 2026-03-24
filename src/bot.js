@@ -14,7 +14,6 @@ const {
   TextInputStyle,
 } = require('discord.js');
 require('dotenv').config();
-const { runOrder } = require('./playwright-script');
 
 const client = new Client({
   intents: [
@@ -169,6 +168,9 @@ client.on('interactionCreate', async interaction => {
 
     // Defer the reply so Discord doesn't time out during automation (which can take minutes)
     await interaction.deferReply();
+
+    // Lazy-load so startup is fast
+    const { runOrder } = require('./playwright-script');
 
     const queuingEmbed = new EmbedBuilder()
       .setColor(0xffa500)

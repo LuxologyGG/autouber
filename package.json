@@ -8,6 +8,7 @@
     "deploy": "wrangler deploy",
     "dev": "wrangler dev",
     "register": "node src/register.js",
+    "setup": "node -e \"const {downloadBrowser}=require('camoufox');downloadBrowser().then(()=>console.log('Camoufox ready'))\"",
     "test-camoufox": "node src/playwright-script.js"
   },
   "keywords": [
