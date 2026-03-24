@@ -1,0 +1,6 @@
+name = "autouber"
+main = "src/server.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+# Non-secret vars go here. Secrets go in .dev.vars (local) or via `wrangler secret put`.
