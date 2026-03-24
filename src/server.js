@@ -20,14 +20,14 @@ export default {
     // Verify Discord request signature
     const signature = request.headers.get('x-signature-ed25519');
     const timestamp = request.headers.get('x-signature-timestamp');
-    const body = await request.text();
+    const rawBody = await request.arrayBuffer();
 
-    const isValid = await verifyKey(body, signature, timestamp, env.DISCORD_PUBLIC_KEY);
+    const isValid = verifyKey(rawBody, signature, timestamp, env.DISCORD_PUBLIC_KEY);
     if (!isValid) {
       return new Response('Bad request signature', { status: 401 });
     }
 
-    const interaction = JSON.parse(body);
+    const interaction = JSON.parse(new TextDecoder().decode(rawBody));
 
     // ── PING (required by Discord during endpoint setup) ──────────────────────
     if (interaction.type === InteractionType.PING) {
