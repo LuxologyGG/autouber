@@ -14,6 +14,7 @@ const {
   TextInputStyle,
 } = require('discord.js');
 require('dotenv').config();
+const { runOrder } = require('./playwright-script');
 
 const client = new Client({
   intents: [
@@ -166,10 +167,13 @@ client.on('interactionCreate', async interaction => {
     const address = interaction.fields.getTextInputValue('address');
     const items = interaction.fields.getTextInputValue('items');
 
-    const confirmEmbed = new EmbedBuilder()
-      .setColor(0x06c167)
-      .setTitle('✅ Order Received!')
-      .setDescription('Your Uber Eats order has been queued. Starting automation…')
+    // Defer the reply so Discord doesn't time out during automation (which can take minutes)
+    await interaction.deferReply();
+
+    const queuingEmbed = new EmbedBuilder()
+      .setColor(0xffa500)
+      .setTitle('⏳ Order Queued')
+      .setDescription('Starting Uber Eats automation… this may take a minute.')
       .addFields(
         { name: '🍽️ Restaurant', value: restaurant },
         { name: '📦 Items', value: items },
@@ -178,10 +182,24 @@ client.on('interactionCreate', async interaction => {
       .setFooter({ text: 'AutoUber • powered by Playwright' })
       .setTimestamp();
 
-    await interaction.reply({ embeds: [confirmEmbed] });
+    await interaction.editReply({ embeds: [queuingEmbed] });
 
-    // TODO: pass restaurant, address, and items to the playwright automation
-    console.log('Order queued:', { restaurant, address, items });
+    // Run the Playwright automation in the background
+    const result = await runOrder({ restaurant, address, items });
+
+    const resultEmbed = new EmbedBuilder()
+      .setColor(result.success ? 0x06c167 : 0xff0000)
+      .setTitle(result.success ? '✅ Order Placed!' : '❌ Order Failed')
+      .setDescription(result.message)
+      .addFields(
+        { name: '🍽️ Restaurant', value: restaurant },
+        { name: '📦 Items', value: items },
+        { name: '📍 Delivery Address', value: address }
+      )
+      .setFooter({ text: 'AutoUber • powered by Playwright' })
+      .setTimestamp();
+
+    await interaction.editReply({ embeds: [resultEmbed] });
     return;
   }
 });
