@@ -1,9 +1,9 @@
-const playwright = require('playwright');
+const { Camoufox } = require('camoufox');
 const crypto = require('crypto');
 require('dotenv').config();
 
 async function run() {
-  const browser = await playwright.chromium.launch({ headless: false }); // Run in headful mode to observe
+  const browser = await Camoufox({ headless: false }); // Run in headful mode to observe
   const page = await browser.newPage();
   page.setDefaultTimeout(60000); // 60 seconds
 
