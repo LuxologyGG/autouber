@@ -1,10 +1,13 @@
 {
   "name": "autouber",
   "version": "1.0.0",
-  "description": "A Discord bot to automate Uber Eats orders.",
-  "main": "src/main.js",
+  "description": "A Discord bot to automate Uber Eats orders, hosted on Cloudflare Workers.",
+  "type": "module",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node src/main.js",
+    "start": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "register": "node src/register.js",
     "test-playwright": "node src/playwright-script.js"
   },
   "keywords": [
@@ -13,13 +16,17 @@
     "uber",
     "eats",
     "automation",
-    "playwright"
+    "cloudflare",
+    "workers"
   ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^14.15.3",
+    "discord-interactions": "^4.0.0",
+    "itty-router": "^5.0.9"
+  },
+  "devDependencies": {
     "dotenv": "^17.3.1",
-    "playwright": "^1.44.1"
+    "wrangler": "^4.76.0"
   }
 }

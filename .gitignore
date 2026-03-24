@@ -61,6 +61,7 @@ typings/
 # dotenv environment variables file
 .env
 .env.test
+.dev.vars
 
 # Playwright
 test-results/
