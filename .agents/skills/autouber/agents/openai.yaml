@@ -1,0 +1,6 @@
+interface:
+  display_name: "Autouber"
+  short_description: "Repo-specific patterns and workflows for autouber"
+  default_prompt: "Use the autouber repo skill to follow existing architecture, testing, and workflow conventions."
+policy:
+  allow_implicit_invocation: true
